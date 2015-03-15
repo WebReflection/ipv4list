@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+(function (ipv4, ifaces) {'use strict';
+  Object
+    .keys(ifaces)
+    .filter(function(k){
+      return /^(?:eth|wl)/.test(k);
+    })
+    .map(function(k){
+      return ifaces[k].filter(this, k);
+    },
+    function (ntw) {
+      if (!ntw.internal && ntw.family === 'IPv4') {
+        ipv4[ntw.interface = this] = [];
+        return true;
+      }
+    })
+    .filter(function (ntw) {
+      return ntw.length;
+    })
+    .forEach(function (ntw) {
+      ntw.forEach(this);
+    },
+    function (ntw) {
+      ipv4[ntw.interface].push(ntw.address);
+    })
+  ;
+  if (!module.parent) {
+    console.log(JSON.stringify(ipv4, null, '  '));
+  } else {
+    module.exports = ipv4;
+  }
+}({}, require('os').networkInterfaces()));
