@@ -1,7 +1,8 @@
 {
   "name": "ipv4list",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "log or returns a list of all available ipv4 addresses",
+  "main": "./bin/ipv4list",
   "bin": "./bin/ipv4list",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
